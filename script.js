@@ -9,7 +9,7 @@ console.log(keys);
 console.log(Object.keys(keys));
 process.stdin.setEncoding("utf8");
 
-const data = "\nLearn Node.js with the help of well built Node.js Tutorial.";
+const data = "//Learn Node.js with the help of well built Node.js Tutorial.";
  
 // append data to file
 fse.appendFile(SRC_DIR, data, 'utf8',
