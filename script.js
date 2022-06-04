@@ -1,12 +1,11 @@
 #!/usr/bin/env node
-/* eslint-disable no-undef */
-import * as keys from "./src/example-2.js";
 import fse from "fs-extra";
+import * as keys from "./src/example-2.js";
 const SRC_DIR = `./src/example-2.js`;
+const fileName = SRC_DIR.substring(SRC_DIR.lastIndexOf('/') + 1)
 // const DEST_DIR = `./src/ENV/PROD/`;
 
-console.log(keys);
-console.log(Object.keys(keys));
+const list = Object.keys(keys)
 process.stdin.setEncoding("utf8");
 
 const data = "//Learn Node.js with the help of well built Node.js Tutorial.";
@@ -23,12 +22,28 @@ const data = "//Learn Node.js with the help of well built Node.js Tutorial.";
 const content = fse.readFileSync(SRC_DIR, "utf8").split(/\r?\n/)
 .map((sourceLine, i) => {
  sourceLine = sourceLine.trim()
+ console.log(i, list.filter(s => {
+     if(sourceLine.includes(s) && !sourceLine.includes('export')) {
+         return s
+     }
+ }).pop(), sourceLine)
 
- console.log(i, sourceLine)
+ const flag = list.filter(s => {
+    if(sourceLine.includes(s) && !sourceLine.includes('export')) {
+        return s
+    }
+}).pop()
+
+if(flag !== undefined) {
+    const check = `/** @type {import('./${fileName}').${flag}} */`
+    return [check, sourceLine]
+}
 
  return sourceLine
-})
-// console.log(content)
+}).flat()
+console.log(content)
+
+fss.writeFile(SRC_DIR, content)
 
 const runCopy = (srcDir, destDir) => {
   fse.copySync(srcDir, destDir, { overwrite: true }, function (err) {
