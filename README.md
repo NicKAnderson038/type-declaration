@@ -5,15 +5,15 @@ Run scripts to get started
 ```bash
 # steps
 
-pnpm i
+npm i
 
 # Generate index.d.ts file
 
-pnpm run gen-types
+npm run gen-types
 
 # Or place types in seperate folder titled: Types
 
-pnpm run gen-types-specific-folder
+npm run gen-types-specific-folder
 
 ```
 
