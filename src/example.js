@@ -1,3 +1,4 @@
+// /** @type {import('./example').randomObject} */
 const randomObject = {
     key: 1,
     value: 'test'
