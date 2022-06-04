@@ -21,7 +21,6 @@ pnpm run gen-types-specific-folder
 
 
 ## Make life easier 🤗
-#
 
 Install <a href="https://marketplace.visualstudio.com/items?itemName=spmeesseman.vscode-taskexplorer" target="_blank">Task Explorer</a> vscode extension and run scripts with a click.
 
