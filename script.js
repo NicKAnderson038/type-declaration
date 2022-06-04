@@ -43,7 +43,7 @@ if(flag !== undefined) {
 }).flat()
 console.log(content)
 
-fss.writeFile(SRC_DIR, content)
+fse.writeFile(SRC_DIR, content)
 
 const runCopy = (srcDir, destDir) => {
   fse.copySync(srcDir, destDir, { overwrite: true }, function (err) {
