@@ -1,7 +1,14 @@
 #!/usr/bin/env node
+const NODE_ENV = process.env.NODE_ENV
+console.log(NODE_ENV)
 import fse from "fs-extra";
-import * as keys from "./src/example-2.js";
-const SRC_DIR = `./src/example-2.js`;
+
+let keys
+if(NODE_ENV) {
+    keys = await import(`./${NODE_ENV}`)
+}
+// import * as keys from './src/example-2';
+const SRC_DIR = `./${NODE_ENV}`;
 const fileName = SRC_DIR.substring(SRC_DIR.lastIndexOf("/") + 1);
 // const DEST_DIR = `./src/ENV/PROD/`;
 
