@@ -5,11 +5,11 @@ import fse from 'fs-extra'
 
 let keys
 if (NODE_ENV) {
-  keys = await import(`./${NODE_ENV}`)
+  keys = await import(`./${NODE_ENV}.js`)
 }
 // import * as keys from './src/example-2';
-const SRC_DIR = `./${NODE_ENV}`
-const fileName = SRC_DIR.substring(SRC_DIR.lastIndexOf('/') + 1)
+const SRC_DIR = `./${NODE_ENV}.js`
+const fileName = NODE_ENV.substring(NODE_ENV.lastIndexOf('/') + 1)
 // const DEST_DIR = `./src/ENV/PROD/`;
 
 const list = Object.keys(keys)
@@ -19,13 +19,13 @@ const content = fse
   .readFileSync(SRC_DIR, 'utf8')
   .split(/\r?\n/)
   .map(sourceLine => {
-    sourceLine = sourceLine.trim()
+    // sourceLine = sourceLine.trim()
     if (!sourceLine.includes('@type')) {
       return sourceLine
     }
   })
   .map(sourceLine => {
-    // sourceLine = sourceLine.trim();
+    sourceLine = sourceLine.trim();
     // console.log(
     //   i,
     //   list
@@ -40,6 +40,7 @@ const content = fse
 
     const flag = list
       .filter(s => {
+        console.log('CHECK: ', sourceLine)
         if (sourceLine.includes(s) && !sourceLine.includes('export')) {
           return s
         }
