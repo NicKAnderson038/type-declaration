@@ -1,5 +1,3 @@
-//@ts-check
-
 const randomObject = {
     key: 1,
     value: 'test'
@@ -7,7 +5,8 @@ const randomObject = {
 
 const array = [1, 2, 1];
 
-/** @type {import('./example').funky} */
+// after building d.ts file. Uncomment this assoication below to get typechecking.
+// /** @type {import('./example').funky} */
 function funky({ one = 1, two = 2, three = 3 }) {
   return (
     one +
