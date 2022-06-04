@@ -25,7 +25,7 @@ const content = fse
     }
   })
   .map(sourceLine => {
-    sourceLine = sourceLine.trim();
+    // sourceLine = sourceLine.trim();
     // console.log(
     //   i,
     //   list
