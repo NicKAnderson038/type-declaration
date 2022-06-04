@@ -11,4 +11,4 @@ console.log("The organisation is ".concat(object.name,
 
 // const array = ['one', 'two', 'three']
 
-// export {};
+export {};
