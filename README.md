@@ -7,9 +7,9 @@ Run scripts to get started
 
 npm i
 
-# Generate index.d.ts file
+# Generate example-2.d.ts file & update example-2.js file
 
-npm run gen-types
+npm start
 
 # Or place types in seperate folder titled: Types
 

@@ -1,52 +1,58 @@
 #!/usr/bin/env node
 const NODE_ENV = process.env.NODE_ENV
 console.log(NODE_ENV)
-import fse from "fs-extra";
+import fse from 'fs-extra'
 
 let keys
-if(NODE_ENV) {
-    keys = await import(`./${NODE_ENV}`)
+if (NODE_ENV) {
+  keys = await import(`./${NODE_ENV}`)
 }
 // import * as keys from './src/example-2';
-const SRC_DIR = `./${NODE_ENV}`;
-const fileName = SRC_DIR.substring(SRC_DIR.lastIndexOf("/") + 1);
+const SRC_DIR = `./${NODE_ENV}`
+const fileName = SRC_DIR.substring(SRC_DIR.lastIndexOf('/') + 1)
 // const DEST_DIR = `./src/ENV/PROD/`;
 
-const list = Object.keys(keys);
-process.stdin.setEncoding("utf8");
+const list = Object.keys(keys)
+process.stdin.setEncoding('utf8')
 
 const content = fse
-  .readFileSync(SRC_DIR, "utf8")
+  .readFileSync(SRC_DIR, 'utf8')
   .split(/\r?\n/)
-  .map((sourceLine, i) => {
-    sourceLine = sourceLine.trim();
-    console.log(
-      i,
-      list
-        .filter((s) => {
-          if (sourceLine.includes(s) && !sourceLine.includes("export")) {
-            return s;
-          }
-        })
-        .pop(),
-      sourceLine
-    );
+  .map(sourceLine => {
+    sourceLine = sourceLine.trim()
+    if (!sourceLine.includes('@type')) {
+      return sourceLine
+    }
+  })
+  .map(sourceLine => {
+    // sourceLine = sourceLine.trim();
+    // console.log(
+    //   i,
+    //   list
+    //     .filter((s) => {
+    //       if (sourceLine.includes(s) && !sourceLine.includes("export")) {
+    //         return s;
+    //       }
+    //     })
+    //     .pop(),
+    //   sourceLine
+    // );
 
     const flag = list
-      .filter((s) => {
-        if (sourceLine.includes(s) && !sourceLine.includes("export")) {
-          return s;
+      .filter(s => {
+        if (sourceLine.includes(s) && !sourceLine.includes('export')) {
+          return s
         }
       })
-      .pop();
+      .pop()
 
     if (flag !== undefined) {
-      const check = `/** @type {import('./${fileName}').${flag}} */`;
-      return [check, sourceLine];
+      const check = `/** @type {import('./${fileName}').${flag}} */`
+      return [check, sourceLine]
     }
 
-    return sourceLine;
+    return sourceLine
   })
-  .flat();
-console.log(content);
-fse.writeFileSync(SRC_DIR, content.join("\n"));
+  .flat()
+console.log(content)
+fse.writeFileSync(SRC_DIR, content.join('\n'))
