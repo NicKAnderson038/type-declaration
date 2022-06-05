@@ -5,6 +5,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
+    "app": "node app.js",
     "gen-types-index": "npx tsc src/index.js --declaration --allowJs --emitDeclarationOnly",
     "gen-types-example": "npx tsc src/example.js --declaration --allowJs --emitDeclarationOnly",
     "gen-types-specific-folder": "npx tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir types",
