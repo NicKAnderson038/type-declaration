@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { exec } from 'child_process'
-import fse from 'fs-extra'
+import fs from 'fs-extra'
 const NODE_ENV = process.env.NODE_ENV
 console.log(NODE_ENV)
 
@@ -17,7 +17,7 @@ if (PATH) {
 }
 
 const updateJsFile = () => {
-    const content = fse
+    const content = fs
         .readFileSync(SRC_DIR, 'utf8')
         .split(/\r?\n/)
         .map(sourceLine => {
@@ -42,7 +42,7 @@ const updateJsFile = () => {
         })
         .flat()
 
-    fse.writeFileSync(SRC_DIR, content.join('\n'))
+    fs.writeFileSync(SRC_DIR, content.join('\n'))
 }
 
 const createTsFile = () => {
@@ -64,7 +64,7 @@ const createTsFile = () => {
 }
 
 const cleanJsFile = async () => {
-    const content = await fse
+    const content = await fs
         .readFileSync(SRC_DIR, 'utf8')
         .split(/\r?\n/)
         .map(sourceLine => {
@@ -73,18 +73,18 @@ const cleanJsFile = async () => {
             }
         })
         .filter(sourceLine => sourceLine !== undefined)
-    // fse.writeFileSync(SRC_DIR, content.join('\n'))
-    await fse.writeFile(SRC_DIR, content.join('\n'), (err, result) => {
+    // fs.writeFileSync(SRC_DIR, content.join('\n'))
+    await fs.writeFile(SRC_DIR, content.join('\n'), (err, result) => {
         if (err) console.log('error', err)
         else
-            fse.unlink(DEST_DIR, (error, stdOut, stdErr) => {
+            fs.unlink(DEST_DIR, (error, stdOut, stdErr) => {
                 console.log('Deleted Typescript file: ', DEST_DIR)
                 createTsFile()
             })
     })
 }
 
-if (fse.existsSync(DEST_DIR)) {
+if (fs.existsSync(DEST_DIR)) {
     console.log('Typescript file present.')
     cleanJsFile()
 } else {
