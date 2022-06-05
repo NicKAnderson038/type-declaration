@@ -15,34 +15,15 @@ if (PATH) {
     keys = await import(SRC_DIR)
 }
 
-// exec('node ./test.js', function (error, stdOut, stdErr) {
-//   console.log('do stuff')
-// })
 
 const updateJsFile = () => {
-    //     let keys
-    // if (PATH) {
-    //     keys = await import(SRC_DIR)
-    // }
-
-    // const list = Object.keys(keys)
-
     const content = fse
         .readFileSync(SRC_DIR, 'utf8')
         .split(/\r?\n/)
-        .filter(sourceLine => {
-            if (!sourceLine.includes('@type')) {
-                return sourceLine
-            }
-            // return ''
-        })
         .map(sourceLine => {
             const flag = Object.keys(keys)
                 .filter(s => {
                     console.log(sourceLine, s)
-                    // if(sourceLine === undefined) {
-                    //     return ''
-                    // } else 
                     if (
                         sourceLine.includes(s) &&
                         !sourceLine.includes('export')
@@ -82,13 +63,30 @@ const createTsFile = () => {
     )
 }
 
+const cleanJsFile = async () => {
+    const content = await fse
+        .readFileSync(SRC_DIR, 'utf8')
+        .split(/\r?\n/)
+        .map(sourceLine => {
+            if (!sourceLine.includes('@type')) {
+                return sourceLine
+            }
+        })
+        .filter(sourceLine => sourceLine !== undefined)
+    // fse.writeFileSync(SRC_DIR, content.join('\n'))
+    await fse.writeFile(SRC_DIR, content.join('\n'), (err, result) => {
+        if (err) console.log('error', err)
+        else
+            fse.unlink(DEST_DIR, (error, stdOut, stdErr) => {
+                console.log('Deleted Typescript file: ', DEST_DIR)
+                createTsFile()
+            })
+    })
+}
+
 if (fse.existsSync(DEST_DIR)) {
     console.log('Typescript file present.')
-    fse.unlink(DEST_DIR, (error, stdOut, stdErr) => {
-        console.log('Deleted Typescript file: ', DEST_DIR)
-        // process.exit()
-        createTsFile()
-    })
+    cleanJsFile()
 } else {
     console.log('NO -- Typescript file present.')
     createTsFile()
