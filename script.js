@@ -19,13 +19,11 @@ const content = fse
     .readFileSync(SRC_DIR, 'utf8')
     .split(/\r?\n/)
     .map(sourceLine => {
-        // sourceLine = sourceLine.trim()
         if (!sourceLine.includes('@type')) {
             return sourceLine
         }
     })
     .map(sourceLine => {
-        // sourceLine = sourceLine.trim();
         // console.log(
         //   i,
         //   list
