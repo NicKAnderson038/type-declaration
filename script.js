@@ -5,7 +5,7 @@ import fse from 'fs-extra'
 
 let keys
 if (NODE_ENV) {
-  keys = await import(`./${NODE_ENV}.js`)
+    keys = await import(`./${NODE_ENV}.js`)
 }
 // import * as keys from './src/example-2';
 const SRC_DIR = `./${NODE_ENV}.js`
@@ -16,44 +16,44 @@ const list = Object.keys(keys)
 process.stdin.setEncoding('utf8')
 
 const content = fse
-  .readFileSync(SRC_DIR, 'utf8')
-  .split(/\r?\n/)
-  .map(sourceLine => {
-    // sourceLine = sourceLine.trim()
-    if (!sourceLine.includes('@type')) {
-      return sourceLine
-    }
-  })
-  .map(sourceLine => {
-    // sourceLine = sourceLine.trim();
-    // console.log(
-    //   i,
-    //   list
-    //     .filter((s) => {
-    //       if (sourceLine.includes(s) && !sourceLine.includes("export")) {
-    //         return s;
-    //       }
-    //     })
-    //     .pop(),
-    //   sourceLine
-    // );
-
-    const flag = list
-      .filter(s => {
-        console.log('CHECK: ', sourceLine)
-        if (sourceLine.includes(s) && !sourceLine.includes('export')) {
-          return s
+    .readFileSync(SRC_DIR, 'utf8')
+    .split(/\r?\n/)
+    .map(sourceLine => {
+        // sourceLine = sourceLine.trim()
+        if (!sourceLine.includes('@type')) {
+            return sourceLine
         }
-      })
-      .pop()
+    })
+    .map(sourceLine => {
+        // sourceLine = sourceLine.trim();
+        // console.log(
+        //   i,
+        //   list
+        //     .filter((s) => {
+        //       if (sourceLine.includes(s) && !sourceLine.includes("export")) {
+        //         return s;
+        //       }
+        //     })
+        //     .pop(),
+        //   sourceLine
+        // );
 
-    if (flag !== undefined) {
-      const check = `/** @type {import('./${fileName}').${flag}} */`
-      return [check, sourceLine]
-    }
+        const flag = list
+            .filter(s => {
+                console.log('CHECK: ', sourceLine)
+                if (sourceLine.includes(s) && !sourceLine.includes('export')) {
+                    return s
+                }
+            })
+            .pop()
 
-    return sourceLine
-  })
-  .flat()
+        if (flag !== undefined) {
+            const check = `/** @type {import('./${fileName}').${flag}} */`
+            return [check, sourceLine]
+        }
+
+        return sourceLine
+    })
+    .flat()
 console.log(content)
 fse.writeFileSync(SRC_DIR, content.join('\n'))
