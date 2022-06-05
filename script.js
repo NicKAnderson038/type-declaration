@@ -39,7 +39,7 @@ const content = fse
         const flag = list
             .filter(s => {
                 console.log('CHECK: ', sourceLine)
-                if (sourceLine.includes(s) && !sourceLine.includes('export')) {
+                if (sourceLine?.includes(s) && !sourceLine?.includes('export')) {
                     return s
                 }
             })

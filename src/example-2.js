@@ -5,7 +5,7 @@ const randomObject = {
 
 const array = [1, 2, 1]
 
-function funky({ one = '1', two = 2, three = 3 }) {
+function funky({ one = 1, two = 2, three = 3 }) {
     return (
         one +
         two +

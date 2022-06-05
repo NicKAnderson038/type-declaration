@@ -39,8 +39,8 @@ const updateJsFile = () => {
             const flag = Object.keys(keys)
                 .filter(s => {
                     if (
-                        sourceLine.includes(s) &&
-                        !sourceLine.includes('export')
+                        sourceLine?.includes(s) &&
+                        !sourceLine?.includes('export')
                     ) {
                         return s
                     }
