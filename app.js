@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import { exec } from 'child_process'
-// import fs from 'fs-extra'
 import fs from 'fs'
 
 const PATH = 'src/example-2'
