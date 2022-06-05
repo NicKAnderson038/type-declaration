@@ -30,17 +30,22 @@ const updateJsFile = () => {
     const content = fse
         .readFileSync(SRC_DIR, 'utf8')
         .split(/\r?\n/)
-        .map(sourceLine => {
+        .filter(sourceLine => {
             if (!sourceLine.includes('@type')) {
                 return sourceLine
             }
+            // return ''
         })
         .map(sourceLine => {
             const flag = Object.keys(keys)
                 .filter(s => {
+                    console.log(sourceLine, s)
+                    // if(sourceLine === undefined) {
+                    //     return ''
+                    // } else 
                     if (
-                        sourceLine?.includes(s) &&
-                        !sourceLine?.includes('export')
+                        sourceLine.includes(s) &&
+                        !sourceLine.includes('export')
                     ) {
                         return s
                     }
