@@ -80,9 +80,7 @@ const createTsFile = () => {
 if (fse.existsSync(DEST_DIR)) {
     console.log('Typescript file present.')
     fse.unlink(DEST_DIR, (error, stdOut, stdErr) => {
-        console.log(error)
-        console.log(stdOut)
-        console.log(stdErr)
+        console.log('Deleted Typescript file: ', DEST_DIR)
         // process.exit()
         createTsFile()
     })
